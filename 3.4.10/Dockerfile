@@ -1,5 +1,7 @@
-FROM openjdk:8-jre-alpine
-MAINTAINER Elisey Zanko <elisey.zanko@gmail.com>
+FROM sumglobal/rpi-openjdk:8-jre-alpine
+MAINTAINER Charles Walker <cwalker@sumglobal.com>
+
+RUN [ "cross-build-start" ]
 
 # Install required packages
 RUN apk add --no-cache \
@@ -29,13 +31,9 @@ RUN set -x \
     && apk add --no-cache --virtual .build-deps \
         gnupg \
     && wget -q "http://www.apache.org/dist/zookeeper/$DISTRO_NAME/$DISTRO_NAME.tar.gz" \
-    && wget -q "http://www.apache.org/dist/zookeeper/$DISTRO_NAME/$DISTRO_NAME.tar.gz.asc" \
-    && export GNUPGHOME="$(mktemp -d)" \
-    && gpg --keyserver ha.pool.sks-keyservers.net --recv-key "$GPG_KEY" \
-    && gpg --batch --verify "$DISTRO_NAME.tar.gz.asc" "$DISTRO_NAME.tar.gz" \
     && tar -xzf "$DISTRO_NAME.tar.gz" \
     && mv "$DISTRO_NAME/conf/"* "$ZOO_CONF_DIR" \
-    && rm -r "$GNUPGHOME" "$DISTRO_NAME.tar.gz" "$DISTRO_NAME.tar.gz.asc" \
+    && rm -r "$DISTRO_NAME.tar.gz"  \
     && apk del .build-deps
 
 WORKDIR $DISTRO_NAME
@@ -49,3 +47,5 @@ ENV PATH=$PATH:/$DISTRO_NAME/bin \
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["zkServer.sh", "start-foreground"]
+
+RUN [ "cross-build-end" ] 
