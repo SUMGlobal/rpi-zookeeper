@@ -9,8 +9,8 @@ RUN apt-get update \
 
 ENV ZOO_USER=zookeeper \
     ZOO_CONF_DIR=/conf \
-    ZOO_DATA_DIR=/data \
-    ZOO_DATA_LOG_DIR=/datalog \
+    ZOO_DATA_DIR=/zk/data \
+    ZOO_DATA_LOG_DIR=/zk/datalog \
     ZOO_PORT=2181 \
     ZOO_TICK_TIME=2000 \
     ZOO_INIT_LIMIT=5 \
