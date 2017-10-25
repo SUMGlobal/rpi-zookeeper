@@ -1,5 +1,6 @@
 FROM sumglobal/rpi-openjdk:8-jdk-azul
-MAINTAINER Charles Walker <cwalker@sumglobal.com>
+
+LABEL maintainer="Charles Walker <cwalker@sumglobal.com>, Chip Dickson <cdickson@sumglobal.com>"
 
 RUN [ "cross-build-start" ]
 
