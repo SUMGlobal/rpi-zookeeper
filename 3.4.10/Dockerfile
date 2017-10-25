@@ -61,6 +61,9 @@ EXPOSE $ZOO_PORT 2888 3888
 
 ENV PATH=$PATH:/$DISTRO_NAME/bin \
     ZOOCFGDIR=$ZOO_CONF_DIR
+# Tone down the JVM heap etc. for the RASPI we only have 1G
+ENV ZK_SERVER_HEAP 384
+ENV ZK_CLIENT_HEAP 128
 
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
